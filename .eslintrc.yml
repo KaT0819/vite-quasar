@@ -6,11 +6,12 @@ extends:
   - eslint:recommended
   - plugin:vue/vue3-essential
   - plugin:@typescript-eslint/recommended
+  - prettier
 parserOptions:
   ecmaVersion: latest
-  parser: '@typescript-eslint/parser'
+  parser: "@typescript-eslint/parser"
   sourceType: module
 plugins:
   - vue
-  - '@typescript-eslint'
+  - "@typescript-eslint"
 rules: {}
