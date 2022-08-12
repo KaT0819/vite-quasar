@@ -23,6 +23,8 @@ yarn add eslint --dev
 
 yarn add -D prettier @vue/eslint-config-prettier
 
+# https://github.com/vuejs/eslint-config-typescript
+yarn add --dev @vue/eslint-config-typescript @rushstack/eslint-patch
 ```
 
 ### eslint 初期化
