@@ -1,21 +1,11 @@
 # vite-quasar
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## プロジェクト作成
+
 以下は本リポジトリを生成するにあたってのコマンド操作
 
-### viteプロジェクト作成
+### vite プロジェクト作成
+
 ```
 yarn create vite
 
@@ -26,15 +16,17 @@ yarn dev
 open http://127.0.0.1:5173/
 ```
 
-### CI用のlinter系
+### CI 用の linter 系
+
 ```
 yarn add eslint --dev
 
-yarn add --dev prettier
+yarn add -D prettier @vue/eslint-config-prettier
 
 ```
 
 ### eslint 初期化
+
 ```
 # ほぼデフォルト設定
 yarn run eslint --init
