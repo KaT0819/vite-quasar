@@ -37,6 +37,64 @@
 
             <q-item-section> トップ </q-item-section>
           </q-item>
+
+          <q-item v-ripple to="/login" exact clickable>
+            <q-item-section avatar>
+              <q-icon name="edit_calendar" />
+            </q-item-section>
+            <q-item-section> ログイン </q-item-section>
+          </q-item>
+
+          <q-separator class="q-my-md" />
+
+          <q-item v-ripple to="/client" exact active clickable>
+            <q-item-section avatar>
+              <q-icon name="people_outline" />
+            </q-item-section>
+            <q-item-section> 顧客一覧 </q-item-section>
+          </q-item>
+          <q-item v-ripple to="/client/create" exact clickable>
+            <q-item-section avatar>
+              <q-icon name="people_outline" />
+            </q-item-section>
+            <q-item-section> 顧客登録 </q-item-section>
+          </q-item>
+          <q-item v-ripple to="/client/1/edit" exact clickable>
+            <q-item-section avatar>
+              <q-icon name="people_outline" />
+            </q-item-section>
+            <q-item-section> 顧客編集 </q-item-section>
+          </q-item>
+          <q-item v-ripple to="/delivery-setting" exact clickable>
+            <q-item-section avatar>
+              <q-icon name="local_shipping" />
+            </q-item-section>
+            <q-item-section> 配信設定一覧 </q-item-section>
+          </q-item>
+          <q-item v-ripple to="/delivery-setting/create" exact clickable>
+            <q-item-section avatar>
+              <q-icon name="local_shipping" />
+            </q-item-section>
+            <q-item-section> 配信設定登録 </q-item-section>
+          </q-item>
+          <q-item v-ripple to="/delivery-setting/1/edit" exact clickable>
+            <q-item-section avatar>
+              <q-icon name="local_shipping" />
+            </q-item-section>
+            <q-item-section> 配信設定編集 </q-item-section>
+          </q-item>
+          <q-item v-ripple to="/area-setting/create" exact clickable>
+            <q-item-section avatar>
+              <q-icon name="place" />
+            </q-item-section>
+            <q-item-section> 地域設定 </q-item-section>
+          </q-item>
+          <q-item v-ripple to="/term-setting/create" exact clickable>
+            <q-item-section avatar>
+              <q-icon name="edit_calendar" />
+            </q-item-section>
+            <q-item-section> 期間設定 </q-item-section>
+          </q-item>
         </q-list>
 
         <q-separator class="q-mt-md q-mb-lg" />
