@@ -7,15 +7,20 @@
         "dev": "vite",
         "build": "vue-tsc --noEmit && vite build",
         "preview": "vite preview",
-        "lint": "eslint --cache --fix src/*.{ts,vue} --ignore-pattern '**/dist' && eslint --cache --fix src/**/*.{ts,vue} --ignore-pattern '**/dist'",
-        "format": "prettier --cache -w src/*.{ts,vue} && prettier --cache -w src/**/*.{ts,vue}",
+        "lint": "eslint --cache --fix src/**/*.{ts,vue} --ignore-pattern '**/dist'",
+        "format": "prettier --cache -w src/**/*.{ts,vue}",
         "fix": "yarn format && yarn lint"
     },
     "dependencies": {
         "vue": "^3.2.37"
     },
     "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.33.0",
+        "@typescript-eslint/parser": "^5.33.0",
         "@vitejs/plugin-vue": "^3.0.2",
+        "eslint": "^8.21.0",
+        "eslint-plugin-vue": "^9.3.0",
+        "prettier": "2.7.1",
         "typescript": "^4.6.4",
         "vite": "^3.0.6",
         "vue-tsc": "^0.39.5"
