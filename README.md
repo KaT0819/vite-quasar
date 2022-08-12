@@ -1,5 +1,12 @@
 # vite-quasar
 
+## セットアップ`
+
+```
+yarn install
+
+```
+
 ## プロジェクト作成
 
 以下は本リポジトリを生成するにあたってのコマンド操作
@@ -76,4 +83,19 @@ info All dependencies
 └─ xml-name-validator@4.0.0
 Successfully created .eslintrc.yml file in C:\Users\katuy\app\vue\vite-quasar
 Done in 154.84s.
+```
+
+### app dependencies
+
+```
+yarn add vue-router axios path
+```
+
+- for quasar
+  https://quasar.dev/start/vite-plugin#using-quasar
+
+```
+yarn add quasar @quasar/extras
+yarn add -D @quasar/vite-plugin sass@1.32.12
+
 ```
