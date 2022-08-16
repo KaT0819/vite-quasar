@@ -148,5 +148,27 @@
       "name": "Bit Factory",
       "email": "mail-32@email.com"
     }
+  ],
+  "delivery-settings": [
+    {
+      "id": "1",
+      "clientCode": 57,
+      "clientName": "ワールド・スペース",
+      "deliveryCode": "01",
+      "deliveryName": "ワールド配信設定01",
+      "status": "配信中",
+      "url": "https: //worldspace.jp/",
+      "deliveryAlertSuppress": false
+    },
+    {
+      "id": "2",
+      "clientCode": 58,
+      "clientName": "ワールド・スペース",
+      "deliveryCode": "02",
+      "deliveryName": "ワールド配信設定02",
+      "status": "配信中",
+      "url": "https: //worldspace.jp/",
+      "deliveryAlertSuppress": true
+    }
   ]
 }
