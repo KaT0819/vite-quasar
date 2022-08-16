@@ -1,28 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { exportFile, useQuasar, QTableProps, QTable, QTr } from 'quasar'
+import axios from 'axios'
 
 const columns: QTableProps['columns'] = [
   {
-    name: 'clientCode',
+    name: 'deliveryCode',
     align: 'left',
-    label: '顧客コード',
-    field: 'clientCode',
+    label: '配信設定コード',
+    field: 'deliveryCode',
     sortable: true,
   },
   {
     name: 'clientName',
     label: '顧客名',
     align: 'left',
-    field: (row: Row) => row.name,
+    field: (row: DeliverySetting) => row.clientName,
     sortable: true,
     required: true,
   },
   {
-    name: 'name',
+    name: 'deliveryName',
     label: '配信設定名',
     align: 'left',
-    field: (row: Row) => row.name,
+    field: (row: DeliverySetting) => row.name,
     sortable: true,
     required: true,
   },
@@ -41,57 +42,33 @@ const columns: QTableProps['columns'] = [
     sortable: true,
     required: true,
   },
+  {
+    name: 'deliveryAlertSuppress',
+    label: '配信アラート抑止',
+    align: 'center',
+    field: (row: DeliverySetting) => (row.deliveryAlertSuppress ? '抑止しない' : '抑止する'),
+    sortable: true,
+    required: true,
+  },
   { name: 'actions', label: 'Actions', field: '', align: 'center' },
 ]
 
-interface Row {
-  [key: string]: string | number
+interface DeliverySetting {
+  [key: string]: string | number | boolean | undefined
+  id: string
   clientCode: number
   clientName: string
-  name: string
-  status: string
+  deliveryCode: string
+  deliveryName: string
   url: string
-  actions: string
+  deliveryAlertSuppress: boolean
 }
 
-const rows = ref<Row[]>([
-  {
-    clientCode: 57,
-    clientName: 'ワールド・スペース',
-    name: 'ワールド配信設定',
-    status: '配信中',
-    url: 'https://worldspace.jp/',
-    actions: '',
-  },
-  {
-    clientCode: 58,
-    clientName: 'ワールド・スペース',
-    name: 'ワールド配信設定2',
-    status: '配信中',
-    url: 'https://worldspace.jp/',
-    actions: '',
-  },
-])
-
-const wrapCsvValue = (
-  val: string,
-  formatFn?: ((arg0: string, arg1: Row | undefined) => string) | undefined,
-  row?: Row
-) => {
-  let formatted = formatFn !== void 0 ? formatFn(val, row) : val
-
-  formatted = formatted === void 0 || formatted === null ? '' : String(formatted)
-
-  formatted = formatted.split('"').join('""')
-  /**
-   * Excel accepts \n and \r in strings, but some other CSV parsers do not
-   * Uncomment the next two lines to escape new lines
-   */
-  // .split('\n').join('\\n')
-  // .split('\r').join('\\r')
-
-  return `"${formatted}"`
+interface Row extends DeliverySetting {
+  status: string
 }
+
+const rows = ref<Row[]>([])
 
 const selected = ref([])
 const $q = useQuasar()
@@ -102,7 +79,7 @@ const clientCode = ref<string>('')
 // 顧客名
 const clientName = ref<string>('')
 // 配信設定名
-const name = ref<string>('')
+const deliveryName = ref<string>('')
 // 対象カテゴリ
 const status = ref('0')
 const statusOptions = [
@@ -124,6 +101,32 @@ const categoryModel = ref('')
 const categoryOptions = ['火災', '気象', '緊急', 'その他']
 const initialPagination = ref({
   rowsPerPage: 0,
+})
+
+const wrapCsvValue = (
+  val: string,
+  formatFn?: ((arg0: string, arg1: Row | undefined) => string) | undefined,
+  row?: Row
+) => {
+  let formatted = formatFn !== void 0 ? formatFn(val, row) : val
+
+  formatted = formatted === void 0 || formatted === null ? '' : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`
+}
+
+onMounted(() => {
+  console.log('mounted')
+  // 配信設定一覧取得
+  getDeliverySetting()
 })
 
 const getSelectedString = () => {
@@ -193,6 +196,21 @@ const deleteRow = (props: QTr['props']) => {
     timeout: 2000,
   })
 }
+
+const getDeliverySetting = () => {
+  const url = 'http://localhost:3000/delivery-settings'
+
+  axios
+    .get(url)
+    .then((response) => {
+      rows.value = response.data
+    })
+    .then((error) => {
+      console.log(error)
+    })
+
+  //   console.log(rows)
+}
 </script>
 
 <template>
@@ -218,7 +236,7 @@ const deleteRow = (props: QTr['props']) => {
           </q-input>
 
           <!-- 配信設定名 -->
-          <q-input v-model="name" filled label="配信設定名" type="search" style="min-width: 150px">
+          <q-input v-model="deliveryName" filled label="配信設定名" type="search" style="min-width: 150px">
             <template #append>
               <q-icon name="search" />
             </template>
@@ -267,7 +285,6 @@ const deleteRow = (props: QTr['props']) => {
         class="my-sticky-virtscroll-table"
         virtual-scroll
         :rows-per-page-options="[0]"
-        :virtual-scroll-sticky-size-start="48"
         :loading="isLoading"
       >
         <template #top-right="props">
@@ -297,21 +314,25 @@ const deleteRow = (props: QTr['props']) => {
 
       <div class="q-mt-md">Selected: {{ JSON.stringify(selected) }}</div>
     </div>
+    <!-- place QPageScroller at end of page -->
+    <q-page-scroller expand position="top" :scroll-offset="150" :offset="[0, 0]">
+      <div class="col cursor-pointer q-pa-sm bg-accent text-white text-center">Scroll back up...</div>
+    </q-page-scroller>
   </q-page>
 </template>
 
 <style lang="sass" scoped>
 .my-sticky-virtscroll-table
   /* height or max-height is important */
-  height: 610px
+  //height: 610px
 
   .q-table__top,
   .q-table__bottom,
   thead tr:first-child th /* bg color is important for th; just specify one */
-    background-color: $secondary
+    background-color: $brown-5
+    color: $grey-3
     font-weight: bold
     font-size: 16px
-    color: #eee
 
   thead tr th
     position: sticky
@@ -321,13 +342,5 @@ const deleteRow = (props: QTr['props']) => {
     /* height of all previous header rows */
     top: 48px
   thead tr:first-child th
-    top: 0
-
-.q-table
-  thead
-    background-color: #eee
-    font-size: 16px
-    z-index: 100
-    position: sticky
     top: 0
 </style>
