@@ -4,13 +4,14 @@ import axios from 'axios'
 import UUID from 'uuidjs'
 import { useRouter } from 'vue-router'
 
+const router = useRouter()
+
 const clientCode = ref<string>('')
 const clientName = ref<string>('')
 const deliveryCode = ref<string>('')
 const deliveryName = ref<string>('')
 const deliveryUrl = ref<string>('')
 const deliveryAlertSuppress = ref<boolean>(true)
-const router = useRouter()
 
 interface DeliverySetting {
   id: string
@@ -20,6 +21,7 @@ interface DeliverySetting {
   url: string
   deliveryAlertSuppress: boolean
 }
+
 const post = ref<DeliverySetting>()
 
 const onSubmit = (event?: Event) => {
@@ -29,10 +31,9 @@ const onSubmit = (event?: Event) => {
     return
   }
 
-  // 配信設定当億
-  postDeliverySetting()
-
   if (event.target instanceof HTMLFormElement) {
+    // 配信設定当億
+    postDeliverySetting()
     event.target.submit()
   }
 }
