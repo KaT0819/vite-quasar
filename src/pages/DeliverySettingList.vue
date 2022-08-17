@@ -217,7 +217,7 @@ const getDeliverySetting = () => {
   <div class="q-px-md">
     <h2>配信設定一覧</h2>
   </div>
-  <q-page class="flex justify-center">
+  <q-page class="flex justify-center" padding>
     <div class="q-pa-md" style="max-width: 1200px">
       <q-form class="q-mb-md" action="/delivery-setting" @submit="onSubmit">
         <div class="q-gutter-md q-mb-md row">
@@ -277,12 +277,12 @@ const getDeliverySetting = () => {
       <q-table
         v-model:selected="selected"
         v-model:pagination="initialPagination"
+        class="my-sticky-virtscroll-table"
         :rows="rows"
         :columns="columns"
         row-key="name"
         :selected-rows-label="getSelectedString"
         selection="multiple"
-        class="my-sticky-virtscroll-table"
         virtual-scroll
         :rows-per-page-options="[0]"
         :loading="isLoading"
@@ -290,11 +290,11 @@ const getDeliverySetting = () => {
         <template #top-right="props">
           <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportTable" />
           <q-btn
+            class="q-ml-md"
             flat
             round
             dense
             :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-            class="q-ml-md"
             @click="props.toggleFullscreen"
           />
         </template>
@@ -328,7 +328,8 @@ const getDeliverySetting = () => {
 
   .q-table__top,
   .q-table__bottom,
-  thead tr:first-child th /* bg color is important for th; just specify one */
+  thead tr:first-child th
+    /* bg color is important for th; just specify one */
     background-color: $brown-5
     color: $grey-3
     font-weight: bold
