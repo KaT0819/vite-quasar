@@ -41,6 +41,21 @@ interface Client {
 // // 顧客一覧
 const rows = ref<Client[]>([])
 
+const $q = useQuasar()
+const selected = ref([])
+const isLoading = ref<boolean>(false)
+
+const code = ref<string>('')
+const name = ref<string>('')
+
+const initialPagination = ref({
+  // sortBy: 'asc',
+  // descending: false,
+  // page: 2,
+  rowsPerPage: 0,
+  // rowsNumber: xx if getting data from a server
+})
+
 const wrapCsvValue = (
   val: string,
   formatFn?: ((arg0: string, arg1: Client | undefined) => string) | undefined,
@@ -65,21 +80,6 @@ onMounted(() => {
   console.log('mounted')
   // 顧客一覧取得
   getClient()
-})
-
-const $q = useQuasar()
-const selected = ref([])
-const isLoading = ref<boolean>(false)
-
-const code = ref<string>('')
-const name = ref<string>('')
-
-const initialPagination = ref({
-  // sortBy: 'asc',
-  // descending: false,
-  // page: 2,
-  rowsPerPage: 0,
-  // rowsNumber: xx if getting data from a server
 })
 
 //
@@ -158,17 +158,12 @@ const getClient = () => {
     .get(url)
     .then((response) => {
       rows.value = response.data
-      //   console.log(rows.value)
-      //   rows.value.forEach((r: Row) => {
-      //     r.actions = ''
-      //     console.log(r)
-      //   })
     })
     .then((error) => {
       console.log(error)
     })
 
-  console.log(rows)
+  //   console.log(rows)
 }
 </script>
 
@@ -178,7 +173,7 @@ const getClient = () => {
   </div>
   <q-page class="flex justify-center" padding>
     <div class="q-pa-md" style="max-width: 1200px">
-      <q-form class="q-mb-xl" @submit="onSubmit">
+      <q-form class="q-mb-xl" action="/client" @submit="onSubmit">
         <div class="q-gutter-md q-mb-md row">
           <!-- 顧客コード -->
           <q-input v-model="code" filled label="顧客コード" type="search" style="min-width: 150px">
@@ -206,11 +201,9 @@ const getClient = () => {
         v-model:selected="selected"
         v-model:pagination="initialPagination"
         class="my-sticky-virtscroll-table"
-        title-class="text-h4 text-white"
         :rows="rows"
         :columns="columns"
         row-key="name"
-        flat
         :selected-rows-label="getSelectedString"
         selection="multiple"
         virtual-scroll
@@ -238,6 +231,9 @@ const getClient = () => {
 
       <!-- <div class="q-mt-md">Selected: {{ JSON.stringify(selected) }}</div> -->
     </div>
+    <q-page-scroller expand position="top" :scroll-offset="150" :offset="[0, 0]">
+      <div class="col cursor-pointer q-pa-sm bg-accent text-white text-center">Scroll back up...</div>
+    </q-page-scroller>
   </q-page>
 </template>
 
@@ -251,11 +247,10 @@ const getClient = () => {
   .q-table__bottom,
   thead tr:first-child th
     /* bg color is important for th; just specify one */
-    background-color: $brown-4
+    background-color: $brown-5
     color: $grey-3
     font-weight: bold
     font-size: 16px
-
 
   thead tr th
     position: sticky
