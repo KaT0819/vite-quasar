@@ -1,174 +1,374 @@
 {
-  "todos": [
-    {
-      "id": 1,
-      "title": "JSON ServerでダミーAPIを作成"
-    },
-    {
-      "id": 2,
-      "title": "Vue.jsで基本機能を実装"
-    }
-  ],
-  "clients": [
-    {
-      "id": "1",
-      "code": 101,
-      "name": "レヤプ・アイランド・フードソリューションズ",
-      "email": "mailmailmailmailmail-01@email.com"
-    },
-    {
-      "id": "2",
-      "code": 1210,
-      "name": "コズミック・ワークショップ",
-      "email": "mailmailmail-02@email.com"
-    },
-    {
-      "id": "3",
-      "code": 1030,
-      "name": "モデオゲリガカルニ",
-      "email": "mailmail-03@email.com"
-    },
-    {
-      "id": "4",
-      "code": 304,
-      "name": "シンフォニーオーケストラ",
-      "email": "mail-04@email.com"
-    },
-    {
-      "id": "5",
-      "code": 1105,
-      "name": "プリヴェンター・マーセナリー",
-      "email": "mail-05@email.com"
-    },
-    {
-      "id": "6",
-      "code": 506,
-      "name": "源六インフォマティスク",
-      "email": "mail-06@email.com"
-    },
-    {
-      "id": "7",
-      "code": 107,
-      "name": "塚由家",
-      "email": "mail-07@email.com"
-    },
-    {
-      "id": "8",
-      "code": 108,
-      "name": "クニノサギリ綜合法律事務所",
-      "email": "mail-08@email.com"
-    },
-    {
-      "id": "9",
-      "code": 25,
-      "name": "澤江ロジスティクス",
-      "email": "mail-09@email.com"
-    },
-    {
-      "id": "10",
-      "code": 15,
-      "name": "民間軍事会社 XN&E社",
-      "email": "mail-10@email.com"
-    },
-    {
-      "id": "11",
-      "code": 35,
-      "name": "茶園オーディオ",
-      "email": "mail-11@email.com"
-    },
-    {
-      "id": "12",
-      "code": 51,
-      "name": "金折",
-      "email": "mail-21@email.com"
-    },
-    {
-      "id": "13",
-      "code": 52,
-      "name": "牛腸香料",
-      "email": "mail-22@email.com"
-    },
-    {
-      "id": "14",
-      "code": 53,
-      "name": "セッパラ・エナジー",
-      "email": "mail-23@email.com"
-    },
-    {
-      "id": "15",
-      "code": 54,
-      "name": "バフスシ飲料",
-      "email": "mail-24@email.com"
-    },
-    {
-      "id": "16",
-      "code": 55,
-      "name": "合同会社 Y&O",
-      "email": "mail-25@email.com"
-    },
-    {
-      "id": "17",
-      "code": 56,
-      "name": "オーキッド・システムテクノロジー",
-      "email": "mail-26@email.com"
-    },
-    {
-      "id": "18",
-      "code": 57,
-      "name": "ワールド・スペース",
-      "email": "mail-27@email.com"
-    },
-    {
-      "id": "19",
-      "code": 58,
-      "name": "名嘉村城定乳業",
-      "email": "mail-28@email.com"
-    },
-    {
-      "id": "20",
-      "code": 59,
-      "name": "栩木組",
-      "email": "mail-29@email.com"
-    },
-    {
-      "id": "21",
-      "code": 60,
-      "name": "DCWF化学",
-      "email": "mail-30@email.com"
-    },
-    {
-      "id": "22",
-      "code": 61,
-      "name": "美和社",
-      "email": "mail-31@email.com"
-    },
-    {
-      "id": "23",
-      "code": 62,
-      "name": "Bit Factory",
-      "email": "mail-32@email.com"
-    }
-  ],
-  "delivery-settings": [
-    {
-      "id": "1",
-      "clientCode": 57,
-      "clientName": "ワールド・スペース",
-      "deliveryCode": "01",
-      "deliveryName": "ワールド配信設定01",
-      "status": "配信中",
-      "url": "https: //worldspace.jp/",
-      "deliveryAlertSuppress": false
-    },
-    {
-      "id": "2",
-      "clientCode": 58,
-      "clientName": "ワールド・スペース",
-      "deliveryCode": "02",
-      "deliveryName": "ワールド配信設定02",
-      "status": "配信中",
-      "url": "https: //worldspace.jp/",
-      "deliveryAlertSuppress": true
-    }
-  ]
+    "todos": [
+        {
+            "id": 1,
+            "title": "JSON ServerでダミーAPIを作成"
+        },
+        {
+            "id": 2,
+            "title": "Vue.jsで基本機能を実装"
+        }
+    ],
+    "clients": [
+        {
+            "id": "1",
+            "code": 101,
+            "name": "レヤプ・アイランド・フードソリューションズ",
+            "email": "mailmailmailmailmail-01@email.com"
+        },
+        {
+            "id": "2",
+            "code": 1210,
+            "name": "コズミック・ワークショップ",
+            "email": "mailmailmail-02@email.com"
+        },
+        {
+            "id": "3",
+            "code": 1030,
+            "name": "モデオゲリガカルニ",
+            "email": "mailmail-03@email.com"
+        },
+        {
+            "id": "4",
+            "code": 304,
+            "name": "シンフォニーオーケストラ",
+            "email": "mail-04@email.com"
+        },
+        {
+            "id": "5",
+            "code": 1105,
+            "name": "プリヴェンター・マーセナリー",
+            "email": "mail-05@email.com"
+        },
+        {
+            "id": "6",
+            "code": 506,
+            "name": "源六インフォマティスク",
+            "email": "mail-06@email.com"
+        },
+        {
+            "id": "7",
+            "code": 107,
+            "name": "塚由家",
+            "email": "mail-07@email.com"
+        },
+        {
+            "id": "8",
+            "code": 108,
+            "name": "クニノサギリ綜合法律事務所",
+            "email": "mail-08@email.com"
+        },
+        {
+            "id": "9",
+            "code": 25,
+            "name": "澤江ロジスティクス",
+            "email": "mail-09@email.com"
+        },
+        {
+            "id": "10",
+            "code": 15,
+            "name": "民間軍事会社 XN&E社",
+            "email": "mail-10@email.com"
+        },
+        {
+            "id": "11",
+            "code": 35,
+            "name": "茶園オーディオ",
+            "email": "mail-11@email.com"
+        },
+        {
+            "id": "12",
+            "code": 51,
+            "name": "金折",
+            "email": "mail-21@email.com"
+        },
+        {
+            "id": "13",
+            "code": 52,
+            "name": "牛腸香料",
+            "email": "mail-22@email.com"
+        },
+        {
+            "id": "14",
+            "code": 53,
+            "name": "セッパラ・エナジー",
+            "email": "mail-23@email.com"
+        },
+        {
+            "id": "15",
+            "code": 54,
+            "name": "バフスシ飲料",
+            "email": "mail-24@email.com"
+        },
+        {
+            "id": "16",
+            "code": 55,
+            "name": "合同会社 Y&O",
+            "email": "mail-25@email.com"
+        },
+        {
+            "id": "17",
+            "code": 56,
+            "name": "オーキッド・システムテクノロジー",
+            "email": "mail-26@email.com"
+        },
+        {
+            "id": "18",
+            "code": 57,
+            "name": "ワールド・スペース",
+            "email": "mail-27@email.com"
+        },
+        {
+            "id": "19",
+            "code": 58,
+            "name": "名嘉村城定乳業",
+            "email": "mail-28@email.com"
+        },
+        {
+            "id": "20",
+            "code": 59,
+            "name": "栩木組",
+            "email": "mail-29@email.com"
+        },
+        {
+            "id": "21",
+            "code": 60,
+            "name": "DCWF化学",
+            "email": "mail-30@email.com"
+        },
+        {
+            "id": "22",
+            "code": 61,
+            "name": "美和社",
+            "email": "mail-31@email.com"
+        },
+        {
+            "id": "23",
+            "code": 62,
+            "name": "Bit Factory",
+            "email": "mail-32@email.com"
+        }
+    ],
+    "delivery-settings": [
+        {
+            "id": "1",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "01",
+            "deliveryName": "ワールド配信設定01",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": true
+        },
+        {
+            "id": "2",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "02",
+            "deliveryName": "ワールド配信設定02",
+            "status": "2",
+            "statusTrial": "1",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "3",
+            "clientCode": "58",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "03",
+            "deliveryName": "ワールド配信設定03",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "4",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "01",
+            "deliveryName": "ワールド配信設定01",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": true
+        },
+        {
+            "id": "5",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "02",
+            "deliveryName": "ワールド配信設定02",
+            "status": "2",
+            "statusTrial": "1",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "6",
+            "clientCode": "58",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "03",
+            "deliveryName": "ワールド配信設定03",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "7",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "07",
+            "deliveryName": "ワールド配信設定07",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": true
+        },
+        {
+            "id": "8",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "08",
+            "deliveryName": "ワールド配信設定08",
+            "status": "2",
+            "statusTrial": "1",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "9",
+            "clientCode": "58",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "09",
+            "deliveryName": "ワールド配信設定09",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "10",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "10",
+            "deliveryName": "ワールド配信設定10",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": true
+        },
+        {
+            "id": "11",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "11",
+            "deliveryName": "ワールド配信設定11",
+            "status": "2",
+            "statusTrial": "1",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "12",
+            "clientCode": "58",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "12",
+            "deliveryName": "ワールド配信設定12",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "13",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "13",
+            "deliveryName": "ワールド配信設定13",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": true
+        },
+        {
+            "id": "14",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "14",
+            "deliveryName": "ワールド配信設定14",
+            "status": "2",
+            "statusTrial": "1",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "15",
+            "clientCode": "58",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "15",
+            "deliveryName": "ワールド配信設定15",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "16",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "16",
+            "deliveryName": "ワールド配信設定16",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": true
+        },
+        {
+            "id": "17",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "17",
+            "deliveryName": "ワールド配信設定17",
+            "status": "2",
+            "statusTrial": "1",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "18",
+            "clientCode": "58",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "18",
+            "deliveryName": "ワールド配信設定18",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        },
+        {
+            "id": "19",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "19",
+            "deliveryName": "ワールド配信設定19",
+            "status": "1",
+            "statusTrial": "2",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": true
+        },
+        {
+            "id": "20",
+            "clientCode": "57",
+            "clientName": "ワールド・スペース",
+            "deliveryCode": "20",
+            "deliveryName": "ワールド配信設定20",
+            "status": "2",
+            "statusTrial": "1",
+            "url": "https: //worldspace.jp/",
+            "deliveryAlertSuppress": false
+        }
+    ]
 }

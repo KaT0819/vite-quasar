@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { QDate } from 'quasar'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const date = new Date()
 // QDate.setToday();
@@ -31,11 +34,9 @@ const onSubmit = (event?: Event) => {
   }
 }
 
-const onReset = (event?: Event) => {
-  if (event == undefined) {
-    return
-  }
-  console.log('onReset', event)
+const onReset = () => {
+  console.log('onReset')
+  router.push('/delivery-setting')
 }
 </script>
 
@@ -122,11 +123,12 @@ const onReset = (event?: Event) => {
         </div>
 
         <div class="q-gutter-md row items-start">
-          <q-input v-model="deliveryStartTime" filled label="開始時刻 *" />
-          <q-input v-model="deliveryEndTime" filled label="終了時刻 *" />
+          <q-input v-model="deliveryStartTime" type="time" filled label="開始時刻 *" />
+          <q-input v-model="deliveryEndTime" type="time" filled label="終了時刻 *" />
         </div>
 
-        <div>
+        <div class="q-pa-md row">
+          <q-space />
           <q-btn label="キャンセル" type="reset" size="lg" color="primary" flat class="q-ml-md" />
           <q-btn label="登録" type="submit" color="primary" class="q-ml-md" />
         </div>

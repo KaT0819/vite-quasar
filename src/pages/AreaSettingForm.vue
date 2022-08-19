@@ -3,10 +3,13 @@
 <!-- eslint-disable vue/max-attributes-per-line -->
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const area1 = ref('')
-const area2 = ref('')
-const area3 = ref('')
+const router = useRouter()
+
+const area1 = ref<string[]>([])
+const area2 = ref<string[]>([])
+const area3 = ref<string[]>([])
 
 const area1Options = ref(['北海道', '東北', '関東', '中部', '関西', '中国', '四国', '九州', '沖縄'])
 const area2Options = ref([
@@ -39,11 +42,9 @@ const onSubmit = (event?: Event) => {
   }
 }
 
-const onReset = (event?: Event) => {
-  if (event == undefined) {
-    return
-  }
-  console.log('onReset', event)
+const onReset = () => {
+  console.log('onReset')
+  router.push('/delivery-setting')
 }
 </script>
 
@@ -52,18 +53,46 @@ const onReset = (event?: Event) => {
     <h2>地域設定</h2>
   </div>
   <q-page class="flex justify-center">
-    <div class="q-pa-md" style="max-width: 800px">
+    <div class="q-pa-md">
       <q-form class="q-gutter-md" action="/delivery-setting" @submit="onSubmit" @reset="onReset">
         <div class="q-gutter-md row items-start">
           <!-- 地域 -->
-          <q-select v-model="area1" clearable filled :options="area1Options" label="地域1" style="min-width: 200px" />
+          <q-select
+            v-model="area1"
+            clearable
+            filled
+            multiple
+            use-chips
+            :options="area1Options"
+            label="地域1"
+            style="min-width: 200px; max-width: 300px"
+          />
           <!-- 地域 -->
-          <q-select v-model="area2" clearable filled :options="area2Options" label="地域2" style="min-width: 200px" />
+          <q-select
+            v-model="area2"
+            clearable
+            filled
+            multiple
+            use-chips
+            :options="area2Options"
+            label="地域2"
+            style="min-width: 200px; max-width: 300px"
+          />
           <!-- 地域 -->
-          <q-select v-model="area3" clearable filled :options="area3Options" label="地域3" style="min-width: 200px" />
+          <q-select
+            v-model="area3"
+            clearable
+            filled
+            multiple
+            use-chips
+            :options="area3Options"
+            label="地域3"
+            style="min-width: 300px; max-width: 400px"
+          />
         </div>
 
-        <div>
+        <div class="q-pa-md row">
+          <q-space />
           <q-btn label="キャンセル" type="reset" size="lg" color="primary" flat class="q-ml-md" />
           <q-btn label="登録" type="submit" color="primary" class="q-ml-md" />
         </div>

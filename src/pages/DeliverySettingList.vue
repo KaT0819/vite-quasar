@@ -12,6 +12,13 @@ const columns: QTableProps['columns'] = [
     sortable: true,
   },
   {
+    name: 'clientCode',
+    align: 'left',
+    label: '顧客コード',
+    field: 'clientCode',
+    sortable: true,
+  },
+  {
     name: 'clientName',
     label: '顧客名',
     align: 'left',
@@ -23,7 +30,7 @@ const columns: QTableProps['columns'] = [
     name: 'deliveryName',
     label: '配信設定名',
     align: 'left',
-    field: (row: DeliverySetting) => row.name,
+    field: (row: DeliverySetting) => row.deliveryName,
     sortable: true,
     required: true,
   },
@@ -31,7 +38,8 @@ const columns: QTableProps['columns'] = [
     name: 'status',
     label: '配信状況',
     align: 'left',
-    field: 'status',
+    // field: 'status',
+    field: (row: DeliverySetting) => (row.status == '1' ? '起動中' : '停止中'),
     sortable: true,
   },
   {
@@ -53,10 +61,20 @@ const columns: QTableProps['columns'] = [
   { name: 'actions', label: 'Actions', field: '', align: 'center' },
 ]
 
+const visibleColumns = ref<string[]>([
+  'clientName',
+  'deliveryName',
+  'status',
+  'statusTrial',
+  'url',
+  'deliveryAlertSuppress',
+  'actions',
+])
+
 interface DeliverySetting {
   [key: string]: string | number | boolean | undefined
   id: string
-  clientCode: number
+  clientCode: string
   clientName: string
   deliveryCode: string
   deliveryName: string
@@ -102,37 +120,41 @@ const categoryOptions = ['火災', '気象', '緊急', 'その他']
 const initialPagination = ref({
   rowsPerPage: 0,
 })
+const search = ref<string>('')
 
-const wrapCsvValue = (
-  val: string,
-  formatFn?: ((arg0: string, arg1: Row | undefined) => string) | undefined,
-  row?: Row
-) => {
-  let formatted = formatFn !== void 0 ? formatFn(val, row) : val
-
-  formatted = formatted === void 0 || formatted === null ? '' : String(formatted)
-
-  formatted = formatted.split('"').join('""')
-  /**
-   * Excel accepts \n and \r in strings, but some other CSV parsers do not
-   * Uncomment the next two lines to escape new lines
-   */
-  // .split('\n').join('\\n')
-  // .split('\r').join('\\r')
-
-  return `"${formatted}"`
-}
-
+// 初期表示
 onMounted(() => {
   console.log('mounted')
   // 配信設定一覧取得
-  getDeliverySetting()
+  onSearch()
 })
 
-const getSelectedString = () => {
-  return selected.value.length === 0
-    ? ''
-    : `${selected.value.length} record${selected.value.length > 1 ? 's' : ''} selected of ${rows.value.length}`
+// 検索
+const onSearch = async () => {
+  console.log('onSearch', clientCode.value, rows)
+  isLoading.value = true
+
+  await getDeliverySetting()
+
+  rows.value = rows.value.filter((row: Row) => {
+    console.log(row.clientName.includes(clientName.value))
+
+    // ステータスの条件（すべての場合は、filter条件に含めない）
+    const isEnableStatus = status.value !== '0'
+
+    return (
+      row.clientCode.includes(clientCode.value) &&
+      row.clientName.includes(clientName.value) &&
+      row.deliveryName.includes(deliveryName.value) &&
+      (isEnableStatus ? row.status === status.value : true) &&
+      row.clientName.includes(clientName.value)
+    )
+  })
+
+  await sleep(1000)
+
+  console.log(rows.value)
+  isLoading.value = false
 }
 
 // CSVダウンロード
@@ -165,17 +187,7 @@ const exportTable = () => {
   }
 }
 
-const onSubmit = (event?: Event) => {
-  console.log('onSubmit', event)
-
-  if (event == undefined) {
-    return
-  }
-  if (event.target instanceof HTMLFormElement) {
-    event.target.submit()
-  }
-}
-
+// 修正
 const editRow = (props: QTr['props']) => {
   // do something
   $q.notify({
@@ -187,20 +199,60 @@ const editRow = (props: QTr['props']) => {
   })
 }
 
+// 削除
 const deleteRow = (props: QTr['props']) => {
   // do something
+  rows.value = rows.value.filter((row) => row.id !== props.row.id)
+
   $q.notify({
     type: 'negative',
     multiLine: true,
-    message: `I'll delete row data => ${JSON.stringify(props.row).split(',').join(', ')}`,
+    message: `削除した風 => ${JSON.stringify(props.row).split(',').join(', ')}`,
     timeout: 2000,
   })
 }
 
-const getDeliverySetting = () => {
+// ステータス切替
+const toggleStatus = async (props: QTr['props']) => {
+  $q.notify({
+    type: 'info',
+    textColor: 'grey-10',
+    multiLine: true,
+    message: `配信設定切替しました => ${props.row.deliveryName}`,
+    timeout: 2000,
+  })
+}
+
+const getSelectedString = () => {
+  return selected.value.length === 0
+    ? ''
+    : `${selected.value.length} record${selected.value.length > 1 ? 's' : ''} selected of ${rows.value.length}`
+}
+
+const wrapCsvValue = (
+  val: string,
+  formatFn?: ((arg0: string, arg1: Row | undefined) => string) | undefined,
+  row?: Row
+) => {
+  let formatted = formatFn !== void 0 ? formatFn(val, row) : val
+
+  formatted = formatted === void 0 || formatted === null ? '' : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`
+}
+
+const getDeliverySetting = async () => {
   const url = 'http://localhost:3000/delivery-settings'
 
-  axios
+  await axios
     .get(url)
     .then((response) => {
       rows.value = response.data
@@ -211,97 +263,120 @@ const getDeliverySetting = () => {
 
   //   console.log(rows)
 }
+
+const sleep = (ms: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
 </script>
 
 <template>
   <div class="q-px-md">
     <h2>配信設定一覧</h2>
   </div>
-  <q-page class="flex justify-center" padding>
-    <div class="q-pa-md" style="max-width: 1200px">
-      <q-form class="q-mb-md" action="/delivery-setting" @submit="onSubmit">
-        <div class="q-gutter-md q-mb-md row">
-          <!-- 顧客コード -->
-          <q-input v-model="clientCode" filled label="顧客コード" type="search" style="min-width: 150px">
-            <template #append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
+  <q-page class="flex justify-center">
+    <div class="q-pa-md row" style="max-width: 1200px">
+      <div class="q-gutter-md q-mb-md row col-10">
+        <!-- 顧客コード -->
+        <q-input v-model="clientCode" filled label="顧客コード" type="search" style="min-width: 150px">
+          <template #append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
 
-          <!-- 顧客名 -->
-          <q-input v-model="clientName" filled label="顧客名" type="search" style="min-width: 150px">
-            <template #append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
+        <!-- 顧客名 -->
+        <q-input v-model="clientName" filled label="顧客名" type="search" style="min-width: 150px">
+          <template #append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
 
-          <!-- 配信設定名 -->
-          <q-input v-model="deliveryName" filled label="配信設定名" type="search" style="min-width: 150px">
-            <template #append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
+        <!-- 配信設定名 -->
+        <q-input v-model="deliveryName" filled label="配信設定名" type="search" style="min-width: 150px">
+          <template #append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
 
-          <!-- 対象カテゴリ -->
-          <q-select
-            v-model="categoryModel"
-            clearable
-            filled
-            :options="categoryOptions"
-            label="対象カテゴリ"
-            style="min-width: 200px"
-          />
+        <!-- 対象カテゴリ -->
+        <q-select
+          v-model="categoryModel"
+          clearable
+          filled
+          :options="categoryOptions"
+          label="対象カテゴリ"
+          style="min-width: 200px"
+        />
 
-          <!-- 状態 -->
-          <q-option-group
-            v-model="status"
-            :options="statusOptions"
-            color="primary"
-            size="lg"
-            label="状態"
-            inline
-            filled
-            dense
-            style=""
-            class="flex flex-center"
-          />
-        </div>
+        <!-- 状態 -->
+        <q-option-group
+          v-model="status"
+          :options="statusOptions"
+          color="primary"
+          size="lg"
+          label="状態"
+          inline
+          filled
+          dense
+          style=""
+          class="flex flex-center"
+        />
+      </div>
 
-        <div class="q-gutter-md q-mb-md row">
-          <q-space />
+      <div class="col-2 q-pa-md q-mb-md column items-end">
+        <q-space />
 
-          <q-btn label="検索" type="submit" color="primary" class="q-ml-md" style="min-width: 100px" />
-        </div>
-      </q-form>
+        <!-- <q-btn label="検索" type="submit" color="primary" class="q-ml-md" style="min-width: 100px" /> -->
+        <q-btn label="検索" @click="onSearch" color="primary" class="q-ml-md" style="min-width: 100px" />
+      </div>
+    </div>
 
+    <div class="q-mb-md">
       <q-table
         v-model:selected="selected"
         v-model:pagination="initialPagination"
         class="my-sticky-virtscroll-table"
         :rows="rows"
         :columns="columns"
-        row-key="name"
+        row-key="id"
         :selected-rows-label="getSelectedString"
         selection="multiple"
+        separator="vertical"
         virtual-scroll
         :rows-per-page-options="[0]"
         :loading="isLoading"
+        :grid="$q.screen.xs"
+        :visible-columns="visibleColumns"
+        :filter="search"
       >
+        <template #loading>
+          <q-inner-loading showing color="brown-5" label="読み込み中..." label-style="font-size: 2em">
+            <q-spinner-hourglass color="brown-5" size="8em" />
+          </q-inner-loading>
+        </template>
         <template #top-right="props">
-          <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportTable" />
-          <q-btn
-            class="q-ml-md"
-            flat
-            round
-            dense
-            :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-            @click="props.toggleFullscreen"
-          />
+          <div class="q-gutter-md q-mb-md row">
+            <q-input dense debounce="400" color="primary" v-model="search">
+              <template v-slot:append>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+            <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportTable" />
+            <q-btn
+              class="q-ml-md"
+              flat
+              round
+              dense
+              :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+              @click="props.toggleFullscreen"
+            />
+          </div>
         </template>
         <template #body-cell-status="props">
           <q-td :props="props">
-            {{ props.row.status }}
-            <q-btn dense color="brown-5" @click="editRow(props)">切替</q-btn>
+            {{ props.row.status == '1' ? '起動中' : '停止中' }}
+            <q-btn dense color="brown-5" @click="toggleStatus(props)">切替</q-btn>
           </q-td>
         </template>
         <template #body-cell-actions="props">
