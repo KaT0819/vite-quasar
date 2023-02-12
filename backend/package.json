@@ -6,6 +6,6 @@
         "start": "node ./bin/www"
     },
     "devDependencies": {
-        "json-server": "^0.17.0"
+        "json-server": "^0.17.1"
     }
 }
